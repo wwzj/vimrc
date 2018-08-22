@@ -38,7 +38,6 @@ Plugin 'Glench/Vim-Jinja2-Syntax'
 Plugin 'Valloric/YouCompleteMe'
 "Plugin 'klen/rope-vim'
 Plugin 'ShowTrailingWhitespace'
-Plugin 'python-mode/python-mode'
 
 Plugin 'tmhedberg/SimpylFold'
 
@@ -167,10 +166,6 @@ let g:pydiction_menu_height = 20
 
 "终端vim启动时自动打开nerdtree
 let g:nerdtree_tabs_open_on_console_startup=0
-
-"按python3标准检测
-let g:pymode_python = 'python3'
-let g:pymode_rope = 0
 
 let g:ag_working_path_mode="r"
 
