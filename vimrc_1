@@ -12,6 +12,10 @@ Plugin 'airblade/vim-gitgutter'
 "vim ack
 Plugin 'mileszs/ack.vim'
 
+Plugin 'posva/vim-vue'
+
+Plugin 'fatih/vim-go'
+
 "filesystem
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
@@ -68,6 +72,12 @@ filetype plugin indent on    " enables filetype detection
 
 " option settings ---------------- {{{
 set guifont=Monaco:h13
+
+
+"vue相关配置
+let g:vue_disable_pre_processors=1
+autocmd FileType vue syntax sync fromstart
+autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 
 " molokai背景色
 let g:rehash256 = 1
@@ -134,12 +144,17 @@ nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 vnoremap <leader>" ma<esc>`<i"<esc>`>a"<esc>
 noremap <F5> :Tlist<CR>
 nnoremap <F8> :TagbarToggle<CR>
-nnoremap <C-l> <C-w><C-l>
-nnoremap <C-h> <C-w><C-h>
-nnoremap <C-j> <C-w><C-j>
-nnoremap <C-k> <C-w><C-k>
+"nnoremap <C-l> <C-w><C-l>
+"nnoremap <C-h> <C-w><C-h>
+"nnoremap <C-j> <C-w><C-j>
+"nnoremap <C-k> <C-w><C-k>
 noremap <C-y> "+y
 noremap <C-x> "+p
+"遍历缓冲区
+"nnoremap <silent> [b :bprevious<CR>
+"nnoremap <silent> ]b :bnext<CR>
+"nnoremap <silent> [B :bfirst<CR>
+"nnoremap <silent> ]B :blast<CR>
 "inoremap <C-d> <esc>gUiwea
 "nnoremap <C-d> %
 "nnoremap tb t(
@@ -150,12 +165,17 @@ noremap <C-x> "+p
 "nnoremap fi f[
 "inoremap jk <esc>
 inoremap <esc> <esc><esc>
-nnoremap <C-w> :cclose<cr>
+"nnoremap <C-w> :cclose<cr>
 
 onoremap q i"
 onoremap b i[
 onoremap p i{
+"%%映射%:h<Tab>
+"cnoremap <expr> %% getcmdtype( ) == ':' ? expand('%:h').'/' : '%%'
 " }}}
+
+"vim-go
+nnoremap <F7> :GoRun<CR>
 
 "ack
 map <F9> :Ack<space>
@@ -164,7 +184,9 @@ let g:ackprg = 'ag --nogroup --nocolor --column'
 " global variable settings -------------------------- {{{
 "autocomplete(YouCompleteMe)
 let g:ycm_autoclose_preview_window_after_completion=1
-let g:ycm_python_binary_path = 'python3'
+let g:ycm_python_binary_path = '/usr/local/bin/python3'
+let g:ycm_server_python_interpreter='/usr/local/bin/python3'
+let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
 "至少三个字符触发
 let g:ycm_min_num_of_chars_for_completion = 3
 "关掉preview
