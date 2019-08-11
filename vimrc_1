@@ -24,6 +24,9 @@ Plugin 'majutsushi/tagbar'
 " 代码补全
 Plugin 'Valloric/YouCompleteMe'
 
+" 括号补全
+Plugin 'jiangmiao/auto-pairs'
+
 " 人工智能代码补全
 " Plugin 'zxqfl/tabnine-vim'
 
@@ -32,7 +35,7 @@ Plugin 'fatih/vim-go'
 
 " Plugin 调用结束
 call vundle#end()
-filetype plugin indent on
+filetype plugin indent on  "启动自动补全
 
 
 " nerdtree 配置
@@ -51,7 +54,19 @@ nmap <F8> :TagbarToggle<CR>
 " vim-go配置
 au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>t <Plug>(go-test)
-let g:go_fmt_command = "goimports"
+let g:go_fmt_command = "goimports" " 格式化将默认的 gofmt 替换
+let g:go_autodetect_gopath = 1
+let g:go_list_type = "quickfix"
+let g:go_version_warning = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_generate_tags = 1
+let g:godef_split=2
 
 
 " 个性化映射
@@ -62,14 +77,38 @@ nmap <leader>w :w<CR>
 nmap <leader>q :q<CR>
 inoremap <esc> <esc><esc>
 
+" tab 标签页切换快捷键
+:nn <Leader>1 1gt
+:nn <Leader>2 2gt
+:nn <Leader>3 3gt
+:nn <Leader>4 4gt
+:nn <Leader>5 5gt
+:nn <Leader>6 6gt
+:nn <Leader>7 7gt
+:nn <Leader>8 8gt
+:nn <Leader>9 8gt
+:nn <Leader>0 :tablast<CR>
+
 
 " 常规配置
-set number              " 显示行号
+syntax enable
 syntax on               " 开启语法高亮
 colorscheme molokai     " 设置颜色类型
+set number              " 显示行号
+set relativenumber      " 相对行号"
 set tabstop=4           " 设置table长度"
 set shiftwidth=4        " 同上"
 set hlsearch            " 高亮搜索项"
 set cursorline          " 突出显示当前行"
 set cursorcolumn        " 突出显示当前列"
+set incsearch           " 开启实时搜索
+set ignorecase          " 搜索时大小写不敏感
+set colorcolumn=120     " 设置超过79长度提示
 
+" ==== 系统剪切板复制粘贴 ====
+" v 模式下复制内容到系统剪切板
+vmap <Leader>c "+yy
+" n 模式下复制一行到系统剪切板
+nmap <Leader>c "+yy
+" n 模式下粘贴系统剪切板的内容
+nmap <Leader>v "+p
