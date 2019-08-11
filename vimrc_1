@@ -48,9 +48,14 @@ set laststatus=2
 " tagbar配置
 nmap <F8> :TagbarToggle<CR>
 
+" vim-go配置
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>t <Plug>(go-test)
+let g:go_fmt_command = "goimports"
+
 
 " 个性化映射
-let mapleader=","
+let mapleader=";"
 nmap <C-j> 10j
 nmap <C-k> 10k
 nmap <leader>w :w<CR>
