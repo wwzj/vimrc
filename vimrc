@@ -35,7 +35,6 @@ call vundle#end()
 filetype plugin indent on
 
 
-
 " nerdtree 配置
 map <C-n> :NERDTreeToggle<CR>
 
@@ -49,9 +48,6 @@ set laststatus=2
 " tagbar配置
 nmap <F8> :TagbarToggle<CR>
 
-" vim-go配置 
-let g:go_fmt_command = "goimports"
-
 
 " 个性化映射
 let mapleader=","
@@ -59,21 +55,7 @@ nmap <C-j> 10j
 nmap <C-k> 10k
 nmap <leader>w :w<CR>
 nmap <leader>q :q<CR>
-" inoremap <esc> <esc><esc>
-
-" golang 命令map
-au FileType go nmap <Leader>s <Plug>(go-implements)
-au FileType go nmap <Leader>i <Plug>(go-info)
-au FileType go nmap <Leader>gd <Plug>(go-doc)
-au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
-au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
-au FileType go nmap <leader>c <Plug>(go-coverage)
-au FileType go nmap <Leader>ds <Plug>(go-def-split)
-au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
-au FileType go nmap <Leader>dt <Plug>(go-def-tab)
-au FileType go nmap <Leader>e <Plug>(go-rename)
+inoremap <esc> <esc><esc>
 
 
 " 常规配置
