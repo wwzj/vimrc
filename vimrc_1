@@ -70,7 +70,7 @@ let g:godef_split=2
 
 
 " 个性化映射
-let mapleader=";"
+let mapleader=","
 nmap <C-j> 10j
 nmap <C-k> 10k
 nmap <leader>w :w<CR>
