@@ -104,6 +104,9 @@ set cursorcolumn        " 突出显示当前列"
 set incsearch           " 开启实时搜索
 set ignorecase          " 搜索时大小写不敏感
 set colorcolumn=120     " 设置超过79长度提示
+set encoding=utf-8
+set noswapfile
+set nobackup            " Don't create annoying backup files
 
 " ==== 系统剪切板复制粘贴 ====
 " v 模式下复制内容到系统剪切板
