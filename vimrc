@@ -59,6 +59,7 @@ nmap <C-j> 10j
 nmap <C-k> 10k
 nmap <leader>w :w<CR>
 nmap <leader>q :q<CR>
+" inoremap <esc> <esc><esc>
 
 " golang 命令map
 au FileType go nmap <Leader>s <Plug>(go-implements)
