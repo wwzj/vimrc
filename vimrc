@@ -10,9 +10,6 @@ filetype on
 " 插件开始的位置
 call plug#begin('~/.vim/plugged')
 
-" 用来提供一个导航目录的侧边栏
-Plug 'scrooloose/nerdtree'
-
 " 目录树
 Plug 'scrooloose/nerdtree'
 
@@ -82,19 +79,6 @@ nmap <C-k> 10k
 nmap <leader>w :w<CR>
 nmap <leader>q :q<CR>
 inoremap <esc> <esc><esc>
-
-" tab 标签页切换快捷键
-:nn <Leader>1 1gt
-:nn <Leader>2 2gt
-:nn <Leader>3 3gt
-:nn <Leader>4 4gt
-:nn <Leader>5 5gt
-:nn <Leader>6 6gt
-:nn <Leader>7 7gt
-:nn <Leader>8 8gt
-:nn <Leader>9 8gt
-:nn <Leader>0 :tablast<CR>
-
 
 " 常规配置
 syntax enable
