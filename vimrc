@@ -52,7 +52,8 @@ set laststatus=2
 nmap <F8> :TagbarToggle<CR>
 
 " YouCompleteMe配置
-let g:ycm_server_python_interpreter='/usr/local/bin/python3'
+" let g:ycm_python_binary_path = '/usr/local/bin/python3'
+" let g:ycm_server_python_interpreter='/usr/local/bin/python3'
 nmap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " vim-go配置
@@ -81,7 +82,7 @@ let g:go_metalinter_deadline = "5s"
 nmap <C-j> 10j
 nmap <C-k> 10k
 nmap <leader>w :w<CR>
-nmap <leader>q :q<CR>
+nmap <leader>q :wq<CR>
 inoremap <esc> <esc><esc>
 
 " 常规配置
