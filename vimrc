@@ -35,6 +35,9 @@ Plug 'jiangmiao/auto-pairs'
 " golang插件
 Plug 'fatih/vim-go'
 
+" 全局搜索ag
+Plug 'dyng/ctrlsf.vim'
+
 call plug#end()
 
 
@@ -58,7 +61,6 @@ nmap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " vim-go配置
 au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>t <Plug>(go-test)
 let g:go_fmt_command = "goimports" " 格式化将默认的 gofmt 替换
 let g:go_list_type = "quickfix"
 
@@ -73,16 +75,19 @@ let g:go_highlight_methods = 1
 let g:go_highlight_generate_tags = 1
 
 " 保存时自动调用check
-let g:go_metalinter_autosave=1
-let g:go_metalinter_autosave_enabled = ['vet', 'golint']
-let g:go_metalinter_deadline = "5s"
+" let g:go_metalinter_autosave=1
+" let g:go_metalinter_command = "golangci-lint"
+" let g:go_metalinter_autosave_enabled = ['vet']
+" let g:go_metalinter_deadline = "5s"
 
 
 " 个性化映射
 nmap <C-j> 10j
 nmap <C-k> 10k
 nmap <leader>w :w<CR>
-nmap <leader>q :wq<CR>
+nmap <leader>q :q<CR>
+nmap <leader>f :CtrlSF 
+nmap <leader>t :GoAddTags 
 inoremap <esc> <esc><esc>
 
 " 常规配置
