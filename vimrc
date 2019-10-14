@@ -52,7 +52,7 @@ let g:molokai_original = 1
 set laststatus=2
 
 " tagbar配置
-nmap <F8> :TagbarToggle<CR>
+nmap <C-m> :TagbarToggle<CR>
 
 " YouCompleteMe配置
 " let g:ycm_python_binary_path = '/usr/local/bin/python3'
