@@ -29,14 +29,14 @@ Plug 'Valloric/YouCompleteMe'
 " 括号补全
 Plug 'jiangmiao/auto-pairs'
 
-" 人工智能代码补全
-" Plug 'zxqfl/tabnine-vim'
-
 " golang插件
 Plug 'fatih/vim-go'
 
 " 全局搜索ag
 Plug 'dyng/ctrlsf.vim'
+
+" git 每行提交
+Plug 'zivyangll/git-blame.vim'
 
 call plug#end()
 
@@ -79,15 +79,21 @@ let g:go_highlight_generate_tags = 1
 " 个性化映射
 nmap <C-j> 10j
 nmap <C-k> 10k
-au FileType go nmap <leader>r <Plug>(go-run)
-nmap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nmap <leader>w :w<CR>
 nmap <leader>q :q<CR>
-nmap <leader>f :CtrlSF 
-nmap <leader>t :GoAddTags 
 nmap <leader>n :set number<CR> :set relativenumber<CR>
 nmap <leader>m :set nonumber<CR> :set norelativenumber<CR>
 inoremap <esc> <esc><esc>
+" golang 测试
+au FileType go nmap <leader>r <Plug>(go-run)
+" golang增加标签
+nmap <leader>t :GoAddTags 
+" 文件跳转
+nmap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" 文件ag搜索
+nmap <leader>f :CtrlSF 
+" 文件git行提交
+nmap <Leader>s :<C-u>call gitblame#echo()<CR>
 
 " 常规配置
 syntax enable
@@ -106,15 +112,12 @@ set ignorecase          " 搜索时大小写不敏感
 set colorcolumn=120     " 设置超过79长度提示
 set autowrite           " 自动保存
 set encoding=utf-8      " 编码方式
-set noswapfile          " I don't like swap files 文件缓存
 set nowrap              " 不折行
-set nobackup            " Don't create annoying backup files
-
-" 折叠相关配置
-set foldenable              " 开始折叠
-set foldmethod=indent       " 设置语法折叠
-set foldlevelstart=99       " 打开文件是默认不折叠代码
-nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>   " 用空格键来开关折叠"
+set noswapfile          " 不要文件缓存
+set nobackup            " 不要备份
+set foldenable          " 开始折叠
+set foldmethod=indent   " 设置语法折叠
+set foldlevelstart=99   " 打开文件是默认不折叠代码
 
 " ==== 系统剪切板复制粘贴 ====
 " v 模式下复制内容到系统剪切板
