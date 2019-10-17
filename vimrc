@@ -96,7 +96,6 @@ colorscheme molokai     " 设置颜色类型
 set number              " 设置行号
 set relativenumber      " 相对行号
 set noic                " 大小写敏感
-set foldmethod=indent   " 折叠方式
 set tabstop=4           " 设置table长度
 set shiftwidth=4        " 同上
 set hlsearch            " 高亮搜索项
@@ -106,9 +105,16 @@ set incsearch           " 开启实时搜索
 set ignorecase          " 搜索时大小写不敏感
 set colorcolumn=120     " 设置超过79长度提示
 set autowrite           " 自动保存
-set encoding=utf-8
-set noswapfile
+set encoding=utf-8      " 编码方式
+set noswapfile          " I don't like swap files 文件缓存
+set nowrap              " 不折行
 set nobackup            " Don't create annoying backup files
+
+" 折叠相关配置
+set foldenable              " 开始折叠
+set foldmethod=indent       " 设置语法折叠
+set foldlevelstart=99       " 打开文件是默认不折叠代码
+nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>   " 用空格键来开关折叠"
 
 " ==== 系统剪切板复制粘贴 ====
 " v 模式下复制内容到系统剪切板
