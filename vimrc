@@ -54,13 +54,8 @@ set laststatus=2
 " tagbar配置
 nmap <C-m> :TagbarToggle<CR>
 
-" YouCompleteMe配置
-" let g:ycm_python_binary_path = '/usr/local/bin/python3'
-" let g:ycm_server_python_interpreter='/usr/local/bin/python3'
-nmap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " vim-go配置
-au FileType go nmap <leader>r <Plug>(go-run)
 let g:go_fmt_command = "goimports" " 格式化将默认的 gofmt 替换
 let g:go_list_type = "quickfix"
 
@@ -84,23 +79,29 @@ let g:go_highlight_generate_tags = 1
 " 个性化映射
 nmap <C-j> 10j
 nmap <C-k> 10k
+au FileType go nmap <leader>r <Plug>(go-run)
+nmap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nmap <leader>w :w<CR>
 nmap <leader>q :q<CR>
 nmap <leader>f :CtrlSF 
 nmap <leader>t :GoAddTags 
+nmap <leader>n :set number<CR> :set relativenumber<CR>
+nmap <leader>m :set nonumber<CR> :set norelativenumber<CR>
 inoremap <esc> <esc><esc>
 
 " 常规配置
 syntax enable
 syntax on               " 开启语法高亮
 colorscheme molokai     " 设置颜色类型
-set number              " 显示行号
-set relativenumber      " 相对行号"
-set tabstop=4           " 设置table长度"
-set shiftwidth=4        " 同上"
-set hlsearch            " 高亮搜索项"
-set cursorline          " 突出显示当前行"
-set cursorcolumn        " 突出显示当前列"
+set number              " 设置行号
+set relativenumber      " 相对行号
+set noic                " 大小写敏感
+set foldmethod=indent   " 折叠方式
+set tabstop=4           " 设置table长度
+set shiftwidth=4        " 同上
+set hlsearch            " 高亮搜索项
+set cursorline          " 突出显示当前行
+set cursorcolumn        " 突出显示当前列
 set incsearch           " 开启实时搜索
 set ignorecase          " 搜索时大小写不敏感
 set colorcolumn=120     " 设置超过79长度提示
