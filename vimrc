@@ -54,7 +54,6 @@ set laststatus=2
 " tagbar配置
 nmap <C-m> :TagbarToggle<CR>
 
-
 " vim-go配置
 let g:go_fmt_command = "goimports" " 格式化将默认的 gofmt 替换
 let g:go_list_type = "quickfix"
@@ -93,7 +92,9 @@ nmap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " 文件ag搜索
 nmap <leader>f :CtrlSF 
 " 文件git行提交
-nmap <Leader>s :<C-u>call gitblame#echo()<CR>
+nmap <leader>s :<C-u>call gitblame#echo()<CR>
+" 输入当前时间
+inoremap \x <C-r>=strftime("%Y-%m-%d %H:%M:%S")<CR>
 
 " 常规配置
 syntax enable
@@ -119,10 +120,3 @@ set foldenable          " 开始折叠
 set foldmethod=indent   " 设置语法折叠
 set foldlevelstart=99   " 打开文件是默认不折叠代码
 
-" ==== 系统剪切板复制粘贴 ====
-" v 模式下复制内容到系统剪切板
-vmap <Leader>c "+yy
-" n 模式下复制一行到系统剪切板
-nmap <Leader>c "+yy
-" n 模式下粘贴系统剪切板的内容
-nmap <Leader>v "+p
