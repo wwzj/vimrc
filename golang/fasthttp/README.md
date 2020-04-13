@@ -7,7 +7,9 @@ fasthttp 是 Go 的一款不同于标准库 net/http 的 HTTP 实现
 - 减少 []byte 到 string 的转化
 - 延迟解析 HTTP 请求中的数据
 
-### 入口
+## 区别
+
+#### 入口
 
 * net/http
 
@@ -44,7 +46,7 @@ fasthttp 是 Go 的一款不同于标准库 net/http 的 HTTP 实现
     }}
     ```
 
-### server处理函数对比
+#### server处理函数对比
 
 * net/http 原生server.go
 
@@ -84,11 +86,11 @@ fasthttp 是 Go 的一款不同于标准库 net/http 的 HTTP 实现
 
 ## bytebufferpool
 
-* 解决的问题
+#### 解决的问题
 
-    - 初始化byte对象是默认的长度, 减少后续操作对byte切片底层数组的扩容操作及浪费问题
+- 初始化byte对象是默认的长度, 减少后续操作对byte切片底层数组的扩容操作及浪费问题
 
-* 使用
+#### 使用
 
     ```golang
     import "github.com/valyala/bytebufferpool"
@@ -103,7 +105,7 @@ fasthttp 是 Go 的一款不同于标准库 net/http 的 HTTP 实现
     }
     ```
 
-* Pool结构体
+#### Pool结构体
 
     ```golang
     type Pool struct {
@@ -117,7 +119,7 @@ fasthttp 是 Go 的一款不同于标准库 net/http 的 HTTP 实现
     }
     ```
 
-* Get函数入口
+#### Get函数入口
 
     ```golang
     var defaultPool Pool
@@ -136,7 +138,7 @@ fasthttp 是 Go 的一款不同于标准库 net/http 的 HTTP 实现
     }
     ```
 
-* Put函数入口
+#### Put函数入口
 
     ```golang
     func Put(b *ByteBuffer) { defaultPool.Put(b) }
@@ -159,7 +161,7 @@ fasthttp 是 Go 的一款不同于标准库 net/http 的 HTTP 实现
     }
     ```
 
-* 校准函数
+#### 校准函数
 
     ```golang
     func (p *Pool) calibrate() {
@@ -209,13 +211,113 @@ fasthttp 是 Go 的一款不同于标准库 net/http 的 HTTP 实现
     }
     ```
 
+## string与[]byte
+
+	```golang
+	// string
+	type stringStruct struct {
+		str unsafe.Pointer
+		len int
+	}
+
+	// []byte
+	type slice struct {
+		array unsafe.Pointer
+		len   int
+		cap   int
+	}
+
+	// string转[]byte
+	func stringtoslicebyte(buf *tmpBuf, s string) []byte {
+		var b []byte
+			if buf != nil && len(s) <= len(buf) {
+			*buf = tmpBuf{}
+			b = buf[:len(s)]
+		
+			} else {
+			b = rawbyteslice(len(s))
+		
+			}
+		copy(b, s)
+		return b
+
+	}
+
+	func rawstring(size int) (s string, b []byte) {
+		p := mallocgc(uintptr(size), nil, false)
+
+		stringStructOf(&s).str = p
+		stringStructOf(&s).len = size
+
+		*(*slice)(unsafe.Pointer(&b)) = slice{p, size, size}
+
+		return
+
+	}
+
+	// []byte转string
+	func slicebytetostring(buf *tmpBuf, b []byte) string {
+		l := len(b)
+			   if l == 0 {
+			// Turns out to be a relatively common case.
+			// Consider that you want to parse out data between parens in "foo()bar",
+			// you find the indices and convert the subslice to string.
+			return ""
+		
+			   }
+		   if raceenabled && l > 0 {
+			racereadrangepc(unsafe.Pointer(&b[0]),
+				uintptr(l),
+				getcallerpc(unsafe.Pointer(&buf)),
+				funcPC(slicebytetostring))
+		
+		   }
+		   if msanenabled && l > 0 {
+			msanread(unsafe.Pointer(&b[0]), uintptr(l))
+		
+		   }
+		s, c := rawstringtmp(buf, l)
+		copy(c, b)
+		return s
+
+	}
+
+	func rawstringtmp(buf *tmpBuf, l int) (s string, b []byte) {
+		if buf != nil && l <= len(buf) {
+			b = buf[:l]
+			s = slicebytetostringtmp(b)
+		
+		} else {
+			s, b = rawstring(l)
+		
+		}
+		return
+
+	}
+
+	// tricky
+	func stringPointer(s string) unsafe.Pointer {
+	  // string的指针本质是*reflect.StringHeader
+	  p := (*reflect.StringHeader)(unsafe.Pointer(&s))
+	  return unsafe.Pointer(p.Data)
+
+	}
+
+	func bytePointer(b []byte) unsafe.Pointer {
+	   // slice的指针本质是*reflect.SliceHeader
+	  p := (*reflect.SliceHeader)(unsafe.Pointer(&b))
+	  return unsafe.Pointer(p.Data)
+
+	}
+	```
+
 ## httprouter
 
-* 压缩前缀树 radix tree
+#### 压缩前缀树 radix tree
 
     ![](../img/jishushu.png)
 
-* 路径示例
+#### 路径示例
 
     ```golang
     router := httprouter.New()
@@ -234,7 +336,7 @@ fasthttp 是 Go 的一款不同于标准库 net/http 的 HTTP 实现
     {earch, 0x1264030}	{upport, 0x1264030}	{:post, 0x1264030}
     ```
 
-* Router结构体
+#### Router结构体
 
     ```golang
     type Router struct {
@@ -244,7 +346,7 @@ fasthttp 是 Go 的一款不同于标准库 net/http 的 HTTP 实现
     }
     ```
 
-* Router.Handle函数, 注册路径及相关处理函数到node中
+#### Router.Handle函数, 注册路径及相关处理函数到node中
 
     ```golang
     func (r *Router) Handle(method, path string, handle Handle) {
@@ -263,7 +365,7 @@ fasthttp 是 Go 的一款不同于标准库 net/http 的 HTTP 实现
     }
     ```
 
-* 基数树结构体
+#### 基数树结构体
 
     ```golang
     type node struct {
@@ -277,7 +379,7 @@ fasthttp 是 Go 的一款不同于标准库 net/http 的 HTTP 实现
     }
     ```
 
-* node.addRoute函数
+#### node.addRoute函数
 
     ```golang
     func (n *node) addRoute(path string, handle Handle) {
@@ -355,7 +457,7 @@ fasthttp 是 Go 的一款不同于标准库 net/http 的 HTTP 实现
     }
     ```
 
-* node.getValue函数
+#### node.getValue函数
 
 ```golang
 func (n *node) getValue(path string, params func() *Params) (handle Handle, ps *Params, tsr bool) {
