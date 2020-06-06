@@ -89,6 +89,17 @@ let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
 let g:autoformat_remove_trailing_spaces = 0
 
+let python_highlight_all=1
+au Filetype python set tabstop=4
+au Filetype python set softtabstop=4
+au Filetype python set shiftwidth=4
+au Filetype python set textwidth=79
+au Filetype python set expandtab
+au Filetype python set autoindent
+au Filetype python set fileformat=unix
+autocmd Filetype python set foldmethod=indent
+autocmd Filetype python set foldlevel=99
+
 
 
 " ==============================================个性化映射=============================================================
@@ -101,7 +112,7 @@ nmap <leader>m :set nonumber<CR> :set norelativenumber<CR>
 inoremap <esc> <esc><esc>
 
 " golang 测试
-au FileType go nmap <leader>r <Plug>(go-run)
+" au FileType go nmap <leader>r <Plug>(go-run)
 " golang增加标签
 nmap <leader>t :GoAddTags 
 " 文件跳转
@@ -138,3 +149,30 @@ set nobackup            " 不要备份
 set foldenable          " 开始折叠
 set foldmethod=indent   " 设置语法折叠
 set foldlevelstart=99   " 打开文件是默认不折叠代码
+
+
+
+" ==============================================自动执行=============================================================
+nmap <leader>r  :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+        exec "w"
+        if &filetype == 'c'
+                exec "!g++ % -o %<"
+                exec "!time ./%<"
+        elseif &filetype == 'cpp'
+                exec "!g++ % -o %<"
+                exec "!time ./%<"
+        elseif &filetype == 'java'
+                exec "!javac %"
+                exec "!time java %<"
+        elseif &filetype == 'sh'
+                :!time bash %
+        elseif &filetype == 'python'
+                exec "!time python %"
+        elseif &filetype == 'html'
+                exec "!firefox % &"
+        elseif &filetype == 'go'
+                exec "!time go run %"
+        endif
+endfunc
+
