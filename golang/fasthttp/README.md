@@ -275,6 +275,26 @@ func slicebytetostring(buf *tmpBuf, b []byte) (str string) {
 #### 无需拷贝(不建议使用)
 
 ```golang
+type SliceHeader struct {
+    Data unsafe.Pointer
+    Len  int
+    Cap  int
+}
+
+type StringHeader struct {
+    Data unsafe.Pointer
+    Len  int
+}
+
+func String2ByteSlice(str string) (bs []byte) {
+    strHdr := (*StringHeader)(unsafe.Pointer(&str))
+    sliceHdr := (*SliceHeader)(unsafe.Pointer(&bs))
+    sliceHdr.Data = strHdr.Data
+    sliceHdr.Len = strHdr.Len
+    sliceHdr.Cap = strHdr.Len
+    return
+}
+
 func str2btes(s string) []byte {
     x := (*[2]uintptr)(unsafe.Pointer(&s))
     h := [3]uintptr{x[0], x[1], x[1]}

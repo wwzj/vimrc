@@ -4,10 +4,8 @@ set nocompatible
 filetype on
 let mapleader=","
 
-"==============================================================================
-" 插件配置 
-"==============================================================================
 
+" =============================================插件配置=============================================================
 " 插件开始的位置
 call plug#begin('~/.vim/plugged')
 
@@ -38,8 +36,13 @@ Plug 'dyng/ctrlsf.vim'
 " git 每行提交
 Plug 'zivyangll/git-blame.vim'
 
-call plug#end()
+" py 代码检查
+Plug 'w0rp/ale'
 
+" py 格式化
+Plug 'Chiel92/vim-autoformat'
+
+call plug#end()
 
 " nerdtree 配置
 map <C-n> :NERDTreeToggle<CR>
@@ -54,6 +57,10 @@ set laststatus=2
 " tagbar配置
 nmap <C-m> :TagbarToggle<CR>
 
+
+
+
+" =============================================golang 配置=============================================================
 " vim-go配置
 let g:go_fmt_command = "goimports" " 格式化将默认的 gofmt 替换
 let g:go_list_type = "quickfix"
@@ -68,14 +75,23 @@ let g:go_highlight_extra_types = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_generate_tags = 1
 
-" 保存时自动调用check
-" let g:go_metalinter_autosave=1
-" let g:go_metalinter_command = "golangci-lint"
-" let g:go_metalinter_autosave_enabled = ['vet']
-" let g:go_metalinter_deadline = "5s"
 
 
-" 个性化映射
+" =============================================python 配置=============================================================
+" ale
+let g:ale_fix_on_save = 1
+let g:ale_completion_enabled = 1
+let g:ale_sign_column_always = 1
+let g:airline#extensions#ale#enabled = 1
+
+" python vim-autoformat
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+let g:autoformat_remove_trailing_spaces = 0
+
+
+
+" ==============================================个性化映射=============================================================
 nmap <C-j> 10j
 nmap <C-k> 10k
 nmap <leader>w :w<CR>
@@ -83,6 +99,7 @@ nmap <leader>q :q<CR>
 nmap <leader>n :set number<CR> :set relativenumber<CR>
 nmap <leader>m :set nonumber<CR> :set norelativenumber<CR>
 inoremap <esc> <esc><esc>
+
 " golang 测试
 au FileType go nmap <leader>r <Plug>(go-run)
 " golang增加标签
@@ -95,6 +112,8 @@ nmap <leader>f :CtrlSF
 nmap <leader>s :<C-u>call gitblame#echo()<CR>
 " 输入当前时间
 inoremap \x <C-r>=strftime("%Y-%m-%d %H:%M:%S")<CR>
+" python 格式化
+nmap \f :Autoformat<CR>
 
 " 常规配置
 syntax enable
@@ -119,4 +138,3 @@ set nobackup            " 不要备份
 set foldenable          " 开始折叠
 set foldmethod=indent   " 设置语法折叠
 set foldlevelstart=99   " 打开文件是默认不折叠代码
-
