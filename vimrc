@@ -162,17 +162,14 @@ func! CompileRunGcc()
         elseif &filetype == 'cpp'
                 exec "!g++ % -o %<"
                 exec "!time ./%<"
-        elseif &filetype == 'java'
-                exec "!javac %"
-                exec "!time java %<"
         elseif &filetype == 'sh'
                 :!time bash %
         elseif &filetype == 'python'
-                exec "!time python %"
+                exec "!python %"
         elseif &filetype == 'html'
                 exec "!firefox % &"
         elseif &filetype == 'go'
-                exec "!time go run %"
+                exec "!go run %"
         endif
 endfunc
 
