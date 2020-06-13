@@ -100,6 +100,9 @@ au Filetype python set fileformat=unix
 autocmd Filetype python set foldmethod=indent
 autocmd Filetype python set foldlevel=99
 
+" 保存时自动格式化
+au BufWrite *.py :Autoformat
+
 
 
 " ==============================================个性化映射=============================================================
@@ -122,9 +125,7 @@ nmap <leader>f :CtrlSF
 " 文件git行提交
 nmap <leader>s :<C-u>call gitblame#echo()<CR>
 " 输入当前时间
-inoremap \x <C-r>=strftime("%Y-%m-%d %H:%M:%S")<CR>
-" python 格式化
-nmap \f :Autoformat<CR>
+inoremap <leader>x <C-r>=strftime("%Y-%m-%d %H:%M:%S")<CR>
 
 " 常规配置
 syntax enable
