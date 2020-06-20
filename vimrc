@@ -112,7 +112,6 @@ nmap <leader>w :w<CR>
 nmap <leader>q :q<CR>
 nmap <leader>n :set number<CR> :set relativenumber<CR>
 nmap <leader>m :set nonumber<CR> :set norelativenumber<CR>
-inoremap <esc> <esc><esc>
 
 " golang 测试
 " au FileType go nmap <leader>r <Plug>(go-run)
@@ -125,7 +124,7 @@ nmap <leader>f :CtrlSF
 " 文件git行提交
 nmap <leader>s :<C-u>call gitblame#echo()<CR>
 " 输入当前时间
-inoremap <leader>x <C-r>=strftime("%Y-%m-%d %H:%M:%S")<CR>
+nmap <leader>x a<C-r>=strftime("%Y-%m-%d %H:%M:%S")<CR><ESC>
 
 " 常规配置
 syntax enable
@@ -171,6 +170,8 @@ func! CompileRunGcc()
                 exec "!firefox % &"
         elseif &filetype == 'go'
                 exec "!go run %"
+        elseif &filetype == 'php'
+                exec "!php %"
         endif
 endfunc
 
